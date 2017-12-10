@@ -10,32 +10,26 @@ export default class IdentifyCSS {
   
   parse(html, stylesheet) {
     const document = new DOM(html);
-    const S = new Store();
-    
-    stylesheet.selectors
-        .filter(_ => document.exists(_))
-        .forEach(_ => S.found(_))
+    const SelectorsStore = new Store();    
+    const exists = stylesheet.selectors.filter(_ => document.exists(_));
+    const notUsed = stylesheet.selectors.filter(_ => !document.exists(_));
 
-    stylesheet.selectors
-        .filter(_ => !document.exists(_))
-        .forEach(_ => S.notFound(_))
+    SelectorsStore.found(exists);
+    SelectorsStore.notFound(notUsed);
+
   }
   
-  await run() {
+  async run() {
     const FL = new FileLoader({
       html: this.options.htmls,
       css: this.options.styles
     });
     
-    return FL.load()
-              .then(([htmls, styles]) => {
-                return new CSS(styles)
-                          .process()
-                          .then((stylesheet) => [htmls, stylesheet])
-              })
-              .then(([htmls, stylesheet]) => {
-                  htmls.forEach(_ => this.parse(_, stylesheet));
-              })
+    const [htmls, styles] = await FL.load();
+
+    const stylesheet = await new CSS(styles).process();
+
+    htmls.forEach(_ => this.parse(_, stylesheet));
   }
 }
 
