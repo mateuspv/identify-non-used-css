@@ -1,8 +1,7 @@
 import DOM from './DOM';
 import CSS from './CSS';
-import FS from './FS';
 import Store from './Store';
-
+import FileLoader from './FileLoader';
 
 export default class IdentifyCSS {
   constructor(options) {
@@ -22,38 +21,25 @@ export default class IdentifyCSS {
         .forEach(_ => S.notFound(_))
   }
   
-  loadHtml(path) {
-    return FS.readDirFiles(path)
-    .then(paths => paths.map(p => FS.readFile(p)))
-    .then(files => Promise.all(files))
-  }
-  
-  loadCss(path) {
-    return FS.readDirFiles(path)
-    .then(paths => paths.map(p => FS.readFile(p)))
-    .then(files => Promise.all(files))
-    .then(f => f.join(''));
-  }
-  
-  
-  run() {
-    const p1 = this.loadHtml(this.options.HTML_FILES_PATH);
-    const p2 = this.loadCss(this.options.CSS_FILES_PATH);
+  await run() {
+    const FL = new FileLoader({
+      html: this.options.htmls,
+      css: this.options.styles
+    });
     
-    return Promise.all([p1, p2])
-                  .then(([htmls, styles]) => {
-                    return new CSS(styles)
-                              .process()
-                              .then((stylesheet) => [htmls, stylesheet])
-                  })
-                  .then(([htmls, stylesheet]) => {
-                      htmls.forEach(_ => this.parse(_, stylesheet));
-                  })
+    return FL.load()
+              .then(([htmls, styles]) => {
+                return new CSS(styles)
+                          .process()
+                          .then((stylesheet) => [htmls, stylesheet])
+              })
+              .then(([htmls, stylesheet]) => {
+                  htmls.forEach(_ => this.parse(_, stylesheet));
+              })
   }
 }
 
-
 new IdentifyCSS({
-  HTML_FILES_PATH: './dummy/**.html',
-  CSS_FILES_PATH: './dummy/**.css'
+  htmls: './dummy/**.html',
+  styles: './dummy/**.css'
 }).run()
