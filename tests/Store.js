@@ -1,7 +1,7 @@
 const test = require('tape')
 const Store = require('../lib/Store').default;
 
-test('#found selector', function (t) {
+test('#found selector', t => {
     const S = new Store();
 
     t.plan(2);
@@ -14,7 +14,7 @@ test('#found selector', function (t) {
     t.equal(result.length, 1);
 });
 
-test('#found selector repeatedly', function (t) {
+test('#found selector repeatedly', t => {
     const S = new Store();
 
     t.plan(2);
@@ -28,7 +28,7 @@ test('#found selector repeatedly', function (t) {
     t.equal(result.length, 1);
 });
 
-test('#notUsed selector', function (t) {
+test('#notUsed selector', t => {
     const S = new Store();
 
     t.plan(2);
@@ -41,7 +41,7 @@ test('#notUsed selector', function (t) {
     t.equal(result.length, 1);
 });
 
-test('#notUsed selector repeatedly', function (t) {
+test('#notUsed selector repeatedly', t => {
     const S = new Store();
 
     t.plan(2);

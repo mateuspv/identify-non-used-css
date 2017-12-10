@@ -1,7 +1,7 @@
 const test = require('tape')
 const CSS = require('../lib/CSS').default;
 
-test('css query test', function (t) {
+test('css query test', t => {
     const Stylesheet = new CSS(`
       .link {color: red}
       @media screen and(min-width: 320px) {display: block}

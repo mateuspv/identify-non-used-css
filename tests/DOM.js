@@ -10,7 +10,7 @@ const template = `
 `;
 
 
-test('found exists css test', function (t) {
+test('found exists css test', t => {
     const html = new DOM(template);
 
     t.plan(1);
@@ -18,7 +18,7 @@ test('found exists css test', function (t) {
     t.equal(html.exists('head'), true);
 });
 
-test('not found exists css test', function (t) {
+test('not found exists css test', t => {
     const html = new DOM(template);
 
     t.plan(1);
@@ -27,7 +27,7 @@ test('not found exists css test', function (t) {
 });
 
 
-test('exists selector', function (t) {
+test('exists selector', t => {
     const html = new DOM(template);
 
     t.plan(2);
