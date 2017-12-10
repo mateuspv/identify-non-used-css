@@ -71,7 +71,7 @@ test('#merge', t => {
   S2.notFound('.selector_4');
 
 
-  const result = Store.merge(S1, S2);
+  const result = Store.merge(S1, S2).compute();
     
   t.plan(4);
 
