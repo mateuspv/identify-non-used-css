@@ -14,10 +14,10 @@ export default class DOM {
       this.parse();
     }
 
-    return this.dom.window.document.querySelectorAll(q);
+    return this.dom.window.document.querySelector(q);
   }
 
   exists(q) {
-    return this.query(q).length !== 0;
+    return this.query(q) ? true : false;
   }
 }

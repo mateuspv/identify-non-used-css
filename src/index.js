@@ -9,12 +9,10 @@ export default class IdentifyCSS {
   }
   
   parse(document, stylesheet) {
-    const SelectorsStore = new Store();
     const exists = stylesheet.selectors.filter(_ => document.exists(_));
     const notUsed = stylesheet.selectors.filter(_ => !document.exists(_));
 
-    SelectorsStore.used(exists);
-    SelectorsStore.notUsed(notUsed);
+    return new Store(exists, notUsed);;
   }
   
   async run() {
@@ -26,11 +24,9 @@ export default class IdentifyCSS {
     const [htmls, styles] = await FL.load();
 
     const stylesheet = await new CSS(styles).process();
-    htmls.forEach(_ => this.parse(new DOM(_), stylesheet));
+    const result = htmls.map(_ => this.parse(new DOM(_), stylesheet));
+    
+    return result;
   }
 }
 
-new IdentifyCSS({
-  htmls: './dummy/**.html',
-  styles: './dummy/**.css'
-}).run()

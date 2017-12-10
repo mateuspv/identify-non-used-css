@@ -10,20 +10,20 @@ const template = `
 `;
 
 
-test('found query css test', function (t) {
+test('found exists css test', function (t) {
     const html = new DOM(template);
 
     t.plan(1);
 
-    t.equal(html.query('head').length, 1);
+    t.equal(html.exists('head'), true);
 });
 
-test('not found query css test', function (t) {
+test('not found exists css test', function (t) {
     const html = new DOM(template);
 
     t.plan(1);
 
-    t.equal(html.query('.some_selector').length, 0);
+    t.equal(html.exists('.some_selector'), false);
 });
 
 

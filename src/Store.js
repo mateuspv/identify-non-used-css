@@ -1,12 +1,12 @@
-import {set, conj, union, difference , toJs} from 'mori';
+import {set, conj, union, difference, toJs} from 'mori';
 
 /**
  * Store: A place for saves all used and non used selectors
  */
 export default class Store {
-  constructor(used, nontsed) {
+  constructor(used, notUsed) {
     this._used = set(used);
-    this._notUsed = set(nontsed);
+    this._notUsed = set(notUsed);
   }
 
   /**
@@ -26,7 +26,7 @@ export default class Store {
   }
 
   /**
-   * compose the used and nontsed selectors
+   * compose the used and notUsed selectors
    * @return {Object}
    */
   compute() {
@@ -65,7 +65,7 @@ export default class Store {
 
       const used = union(S1._used, S2._used);
       const notUsed = union(notUsedOnS1, notUsedOnS2);
-      
+    
     return new Store(used, notUsed);
   }
 }
