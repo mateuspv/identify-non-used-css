@@ -42,8 +42,13 @@ export default class Store {
    */
   toString() {
     return `
-      used: ${this.compute().used}
-      not used: ${this.compute().notUsed}
+-------------------------------------
+Used selectors:
+${this.compute().used.join('\n')}
+-------------------------------------
+Not used selectors:
+${this.compute().notUsed.join('\n')}
+-------------------------------------
       `
   }
 
