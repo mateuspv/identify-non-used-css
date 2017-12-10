@@ -6,7 +6,6 @@ export default class Store {
     this._notFound = set();
   }
 
-  
   found(selector) {
     this._found = conj(this._found, selector);
   }

@@ -16,4 +16,8 @@ export default class DOM {
 
     return this.dom.window.document.querySelectorAll(q);
   }
+
+  exists(q) {
+    return this.query(q).length !== 0;
+  }
 }

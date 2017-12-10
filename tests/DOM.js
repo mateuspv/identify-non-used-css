@@ -25,3 +25,13 @@ test('not found query css test', function (t) {
 
     t.equal(html.query('.some_selector').length, 0);
 });
+
+
+test('exists selector', function (t) {
+    const html = new DOM(template);
+
+    t.plan(2);
+
+    t.equal(html.exists('head'), true);
+    t.equal(html.exists('.some_selector'), false);
+});

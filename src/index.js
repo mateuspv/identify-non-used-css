@@ -1,6 +1,8 @@
 import DOM from './DOM';
 import CSS from './CSS';
 import FS from './FS';
+import Store from './Store';
+
 
 export default class IdentifyCSS {
   constructor(options) {
@@ -10,10 +12,11 @@ export default class IdentifyCSS {
   parse(html, styles) {
     const document = new DOM(html);
     const stylesheet = new CSS(styles);
-  
+    const S = new Store();
     
     stylesheet.process()
             .then(() => stylesheet.selectors.forEach(_ => {
+              console.log(_)
             }))
   }
   
