@@ -4,14 +4,16 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "babel src --out-dir lib -w",
     "test": "tape tests/**/*.js",
     "start": "npm run build && npm run test"
   },
   "author": "mateuspv",
   "license": "MIT",
   "dependencies": {
+    "glob": "^7.1.2",
     "jsdom": "^11.5.1",
+    "mori": "^0.3.2",
     "postcss": "^6.0.14"
   },
   "devDependencies": {
