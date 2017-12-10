@@ -13,8 +13,8 @@ export default class IdentifyCSS {
     const exists = stylesheet.selectors.filter(_ => document.exists(_));
     const notUsed = stylesheet.selectors.filter(_ => !document.exists(_));
 
-    SelectorsStore.found(exists);
-    SelectorsStore.notFound(notUsed);
+    SelectorsStore.used(exists);
+    SelectorsStore.notUsed(notUsed);
   }
   
   async run() {

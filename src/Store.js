@@ -4,35 +4,35 @@ import {set, conj, union, difference , toJs} from 'mori';
  * Store: A place for saves all used and non used selectors
  */
 export default class Store {
-  constructor(used, nonUsed) {
-    this._found = set(used);
-    this._notFound = set(nonUsed);
+  constructor(used, nontsed) {
+    this._used = set(used);
+    this._notUsed = set(nontsed);
   }
 
   /**
-   * Adds a selector to a found list
+   * Adds a selector to a used list
    * @param  {String} selector
    */
-  found(selector) {
-    this._found = conj(this._found, selector);
+  used(selector) {
+    this._used = conj(this._used, selector);
   }
 
   /**
-   * Adds a selector to notFound list
+   * Adds a selector to notUsed list
    * @param  {String} selector
    */
-  notFound(selector) {
-    return this._notFound = conj(this._notFound, selector);
+  notUsed(selector) {
+    return this._notUsed = conj(this._notUsed, selector);
   }
 
   /**
-   * compose the used and nonUsed selectors
+   * compose the used and nontsed selectors
    * @return {Object}
    */
   compute() {
     return  {
-      found: toJs(this._found),
-      notFound: toJs(this._notFound)
+      used: toJs(this._used),
+      notUsed: toJs(this._notUsed)
     }
   }
 
@@ -42,14 +42,14 @@ export default class Store {
    */
   toString() {
     return `
-      found: ${this.compute().found}
-      not found: ${this.compute().notFound}
+      used: ${this.compute().used}
+      not used: ${this.compute().notUsed}
       `
   }
 
   /**
    * merge two Stores
-   *  - merge all found selectors
+   *  - merge all used selectors
    *  - merge all selectors not used on both stores,
    *    if some selector is not used on StoreA, but is used
    *    on StoreB, then the selector becomes saved as used;
@@ -59,13 +59,13 @@ export default class Store {
    */
   static merge(S1, S2) {
       // Takes all selectors not used on S2 and  return those who are not used on S1.
-      const notFoundOnS2 = difference(S2._notFound, S1._found);
+      const notUsedOnS2 = difference(S2._notUsed, S1._used);
       // Takes all selectors not used on S1 and  return those who are not used S2.
-      const notFoundOnS1   = difference(S1._notFound, S2._found);
+      const notUsedOnS1   = difference(S1._notUsed, S2._used);
 
-      const found = union(S1._found, S2._found);
-      const notFound = union(notFoundOnS1, notFoundOnS2);
+      const used = union(S1._used, S2._used);
+      const notUsed = union(notUsedOnS1, notUsedOnS2);
       
-    return new Store(found, notFound);
+    return new Store(used, notUsed);
   }
 }
