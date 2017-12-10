@@ -8,15 +8,13 @@ export default class IdentifyCSS {
     this.options = options;
   }
   
-  parse(html, stylesheet) {
-    const document = new DOM(html);
-    const SelectorsStore = new Store();    
+  parse(document, stylesheet) {
+    const SelectorsStore = new Store();
     const exists = stylesheet.selectors.filter(_ => document.exists(_));
     const notUsed = stylesheet.selectors.filter(_ => !document.exists(_));
 
     SelectorsStore.found(exists);
     SelectorsStore.notFound(notUsed);
-
   }
   
   async run() {
@@ -28,8 +26,7 @@ export default class IdentifyCSS {
     const [htmls, styles] = await FL.load();
 
     const stylesheet = await new CSS(styles).process();
-
-    htmls.forEach(_ => this.parse(_, stylesheet));
+    htmls.forEach(_ => this.parse(new DOM(_), stylesheet));
   }
 }
 
