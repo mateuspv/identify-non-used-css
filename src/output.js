@@ -1,3 +1,5 @@
+import FS from 'fs';
+
 export default class Output {
   constructor(style) {
     this.style = style;
@@ -11,7 +13,11 @@ export default class Output {
     return Store;
   }
 
-  run(Store) {
-    return this[this.style](Store);
+  file(Store) {
+    FS.writeFileSync('./identify_css_log.txt', Store.toString());
+  }
+
+  async run(Store) {
+    return await this[this.style](Store);
   }
 }
